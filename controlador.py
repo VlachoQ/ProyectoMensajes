@@ -10,6 +10,19 @@ def buscarUsuario(usuario,password):
     consulta="select * from usuarios where correo='"+usuario+"' and password= '"+password+"' and estado='1'"
     cursor.execute(consulta)
     resultado=cursor.fetchall() # DEVUELVE UNA LISTA
+    #print(resultado)
+    return resultado
+
+
+###############################################################################
+
+def listaUsuarios():
+    db=sqlite3.connect("mensajes.s3db")
+    db.row_factory=sqlite3.Row
+    cursor=db.cursor()
+    consulta="select * from usuarios where estado='1' order by nombreusuario asc"
+    cursor.execute(consulta)
+    resultado=cursor.fetchall() # DEVUELVE UNA LISTA
     return resultado
 
 ###############################################################################
@@ -23,6 +36,40 @@ def registroUsuario(nombre,correo,password,codigo):
     #resultado=cursor.fetchall() # DEVUELVE UNA LISTA
     db.commit()
     return "1"
+
+###############################################################################
+
+def enviados(correo):
+    db=sqlite3.connect("mensajes.s3db")
+    db.row_factory=sqlite3.Row
+    cursor=db.cursor()
+    consulta="select m.asunto, m.mensaje, m.fecha, m.hora, u.nombreusuario from mensajeria m, usuarios u where u.correo = m.id_usu_recibe and m.id_usu_envia='"+correo+"'"
+    cursor.execute(consulta)
+    resultado=cursor.fetchall() 
+    return resultado
+###############################################################################
+
+
+def recibidos(correo):
+    db=sqlite3.connect("mensajes.s3db")
+    db.row_factory=sqlite3.Row
+    cursor=db.cursor()
+    consulta=" select m.asunto, m.mensaje, m.fecha, m.hora, u.nombreusuario from mensajeria m, usuarios u where u.correo = m.id_usu_envia and m.id_usu_recibe='"+correo+"' "
+    resultado=cursor.fetchall()
+    db.commit()
+    return "1"
+###############################################################################
+
+def guardarMensaje(email_destino,asunto,mensaje,email_origen):
+    db=sqlite3.connect("mensajes.s3db")
+    db.row_factory=sqlite3.Row
+    cursor=db.cursor()
+    consulta="insert into mensajeria(asunto,mensaje,fecha,hora,id_usu_envia,id_usu_recibe,estado) values('"+asunto+"','"+mensaje+"', DATE('now'),TIME('now'),'"+email_origen+"','"+email_destino+"','0')"
+    cursor.execute(consulta)
+    #resultado=cursor.fetchall() # DEVUELVE UNA LISTA
+    db.commit()
+    return "1"
+
 
 ###############################################################################
 
@@ -44,6 +91,14 @@ def ValidarActivarUser(codigovalidacion):
 
   
 
-###############################################################################
-
+#############################  ##################################################
+def actualizarPassw(correo,password):
+    db=sqlite3.connect("mensajes.s3db")
+    db.row_factory=sqlite3.Row
+    cursor=db.cursor()
+    # esta consulta actualiza el estado a 1 si el codigovalidacion corresponde
+    consulta="update usuarios set password = '"+password+"' where correo= '"+correo+"'"
+    cursor.execute(consulta)
+    db.commit()
+    return "1"
 ###############################################################################

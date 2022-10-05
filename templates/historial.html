@@ -1,0 +1,16 @@
+<table class="table table-striped table-hover table-dordered">
+    <tr>
+        <th>Asunto</th>
+        <th>Mensaje</th>
+        <th>Fecha / Hora</th>
+        <th>Destinatario</th>
+    </tr>
+    {% for c in correo%}
+    <tr>
+        <td>{{ c[ 'asunto'] }}</td>
+        <td>{{ c[ 'mensaje'] }}</td>
+        <td>{{ c[ 'fecha'] }} / {{ c[ 'hora'] }}</td>
+        <td>{{ c['nombreusuario' ] }}</td>
+    </tr>
+    {%endfor%}
+</table>

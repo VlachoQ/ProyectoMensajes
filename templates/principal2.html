@@ -36,7 +36,7 @@
             <section class="content">
                 <div class="container-fluid">
                     <div class="contariner alert alert-info">
-                        <h2>Center MAIL</h2>
+                        <h2>Center MAIL - {{infousu[0].nombreusuario}}</h2>
                     </div>
 
 
@@ -45,35 +45,123 @@
                             <!-- Custom Tabs -->
                             <div class="card">
                                 <div class="card-header d-flex p-0">
-                                    <h3 class="card-title p-3">Center MAIL</h3>
+                                    <a href="/"><button class="btn btn-danger">Regresar</button></a>
+                                    <h3 class="card-title p-3">Plataforma MAIL Equipo8</h3>
                                     <ul class="nav nav-pills ml-auto p-2">
                                         <li class="nav-item"><a class="nav-link active" href="#tab_1"
                                                 data-toggle="tab">Gestion de Envio</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="#tab_2"
-                                                data-toggle="tab">Historial</a></li>
+                                        <li class="nav-item" onclick="cargaHistorial()"><a class="nav-link"
+                                                href="#tab_2" data-toggle="tab">Historial de Correos</a></li>
                                         <li class="nav-item"><a class="nav-link" href="#tab_3"
                                                 data-toggle="tab">Perfil</a></li>
 
                                     </ul>
-                                </div><!-- /.card-header -->
+                                </div>
                                 <div class="card-body">
                                     <div class="tab-content">
                                         <div class="tab-pane active" id="tab_1">
 
+                                            <!--#####################  FORMULARIO ENVIO CORREO  ################## -->
+                                            <form onsubmit="return enviarMail()">
+                                                <!-- se cre este metodo (enviarMail)cuando se pulse el boton ENVIAR retorna la funcion 'enviarMail'  -->
+                                                <section class="content">
+                                                    <div class="container-fluid">
+                                                        <div class="row">
 
+                                                            <!-- /.col -->
+                                                            <div class="col-md-12">
+
+                                                                <div class="card card-primary card-outline">
+
+
+                                                                    <div class="card-header">
+                                                                        <h2 class="card-title">Redactar Mensaje</h2>
+                                                                        <!-- <a href="/"><button style=" margin-left: 500px" class="btn btn-danger">Regresar</button></a> -->
+                                                                    </div>
+                                                                    <!-- /.card-header -->
+                                                                    <div class="card-body">
+                                                                        <!--<div class="form-group">
+                                                                            <input class="form-control" placeholder="Para:">
+                                                                        </div>-->
+                                                                        <h5
+                                                                            style="color:#aeaeb7 ; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">
+                                                                            Para:</h5>
+                                                                        <select
+                                                                            style="height: 35px; border-radius: 5px; border-color: #d3d3d6"
+                                                                            class="col-md-12" required
+                                                                            name="selectEmailDestino"
+                                                                            id="selectEmailDestino">
+
+                                                                            <option value="">Seleccione un
+                                                                                Destinatario...
+                                                                            </option>
+                                                                            {% for m in data%}
+                                                                            <option value="{{m['correo']}}">
+                                                                                {{m['nombreusuario']}}
+                                                                            </option>
+                                                                            {%endfor%}
+
+
+                                                                        </select>
+                                                                        <br><br>
+
+                                                                        <div class="form-group">
+                                                                            <input class="form-control"
+                                                                                placeholder="Asunto:" required
+                                                                                id="txtasunto" name="txtasunto">
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <textarea placeholder="Mensaje:" required
+                                                                                id="txtMensaje" name="txtMensaje"
+                                                                                style="height: 500px">
+
+
+                                                                            </textarea>
+
+
+                                                                        </div>
+                                                                        <center>
+                                                                            <button type="submit"
+                                                                                class="btn btn-primary" type="submit"><i
+                                                                                    class="far fa-envelope"></i>Enviar</button>
+                                                                        </center>
+
+                                                                    </div>
+                                                                    <!-- /.col -->
+                                                                </div>
+                                                                <!-- /.row -->
+                                                            </div><!-- /.container-fluid -->
+
+                                                </section>
+                                            </form>
 
 
                                         </div>
                                         <!-- /.tab-pane -->
                                         <div class="tab-pane" id="tab_2">
-
+                                            <!-- Aqui dividimos la pantalla para enviados y recibidos -->
+                                            <div class="row">
+                                                <div class="col-6" id="d_enviados" name="d_enviados">enviados</div>
+                                                <div class="col-6" id="d_recibidos" name="d_recibidos">recibidos</div>
+                                            </div>
 
                                         </div>
                                         <!-- /.tab-pane -->
+
                                         <div class="tab-pane" id="tab_3">
-
-
+                                            <form onsubmit="return actualizarpassword()">
+                                                <input placeholder="Nueva Contraseña" class="form-control" id="txtpass1"
+                                                    name="txtpass1" required type="password">
+                                                <hr>
+                                                <input placeholder="Confirmación Nueva Contraseña" class="form-control"
+                                                    id="txtpass2" name="txtpass2" required type="password">
+                                                <hr>
+                                                <center><button type="submit"
+                                                        class="btn btn-primary">Actualizar</button></center>
+                                            </form>
                                         </div>
+
+
                                         <!-- /.tab-pane -->
                                     </div>
                                     <!-- /.tab-content -->
@@ -103,7 +191,9 @@
     <!-- jQuery -->
     <script src="https://adminlte.io/themes/v3/plugins/jquery/jquery.min.js"></script>
     <script src="https://adminlte.io/themes/v3/plugins/jquery-ui/jquery-ui.min.js"></script>
-
+    <script>
+        $.widget.bridge('uibutton', $.ui.button)
+    </script>
     <!-- Bootstrap 4 -->
     <script src="https://adminlte.io/themes/v3/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="https://adminlte.io/themes/v3/plugins/chart.js/Chart.min.js"></script>
@@ -121,19 +211,90 @@
     <script src="https://adminlte.io/themes/v3/dist/js/pages/dashboard.js"></script>
 
     <script>
-        function gestionmenus() {
-            $("#titulo").html("Gestion de Menus");
+        $(function () {
+            //Add text editor
+            $('#txtMensaje').summernote()
+        })
+    </script>
 
-            var info = "<h1>informacion de menus</h1>"
-                + "<br>sdfghjkoifgghiojb "
-                + "<br><button class='btn btn-info'>Procesar</button>";
+    <script>
+        function enviarMail() {
 
-            $("#contenido").html(info);
+            /*alert("prueba")*/
+            /* se utiliza AJAX  para enviar peticiones a un servidor de manera Asincrona */
+            $.ajax({
+                url: 'enviarMail', /*ruta de python    compose-textarea */
+                data: "emaildestino=" + $("#selectEmailDestino").val() + "&asunto=" + $("#txtasunto").val() + "&mensaje=" + $("#txtMensaje").val(),
+                type: 'POST',
+                success: function (r) {
+                    alert(r);
+                },
+                error: function (xhr, status) {
+                    alert('Error intente en otro momento');
+                }
+            });
 
+            return false; /*cuando haga la funcion no se reinicie, se queda en la misma pagina*/
 
         }
 
+        //////////////////////////////////////
+        function cargaHistorial() {
+
+            $.ajax({
+                url: 'historialEnviados', /*ruta de python    compose-textarea */
+                data: "",
+                type: 'POST',
+                success: function (r) {
+                    r = "<center><h3>Correos Enviados</h3></center>" + r
+                    $("#d_enviados").html(r);
+                },
+                error: function (xhr, status) {
+                    alert('Error intente en otro momento');
+                }
+            });
+
+
+
+            $.ajax({
+                url: 'historialRecibidos', /*ruta de python    compose-textarea */
+                data: "",
+                type: 'POST',
+                success: function (r) {
+                    r = "<center><h3>Correos Recibidos</h3></center>" + r
+                    $("#d_recibidos").html(r);
+                },
+                error: function (xhr, status) {
+                    alert('Error intente en otro momento');
+                }
+            });
+
+        }
+
+        function actualizarpassword() {
+            if ($("#txtpass1").val() == $("#txtpass2").val()) {
+
+                $.ajax({
+                    url: 'actualizarPass',
+                    data: "pass=" + $("#txtpass1").val(),
+                    type: 'POST',
+                    success: function (r) {
+                        alert(r);
+                    },
+                    error: function (xhr, status) {
+                        alert('Error intente en otro momento');
+                    }
+                });
+
+            }
+            else {
+                alert("Las Contraseñas No Son Iguales.")
+            }
+            return false;
+        }
+
     </script>
+
 
 </body>
 

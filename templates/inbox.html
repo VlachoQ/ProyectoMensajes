@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Mailbox</title>
+    <title>Inbox</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -38,11 +38,12 @@
     <section class="content">
         <div class="row">
             <div class="col-md-2">
-                <a href="compose.html" class="btn btn-primary btn-block mb-3">Compose</a>
+
+                <a href="/redactarMensaje" class="btn btn-primary btn-block mb-3">Redactar</a>
 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Folders</h3>
+                        <h3 class="card-title">Carpetas</h3>
 
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -54,29 +55,29 @@
                         <ul class="nav nav-pills flex-column">
                             <li class="nav-item active">
                                 <a href="#" class="nav-link">
-                                    <i class="fas fa-inbox"></i> Inbox
+                                    <i class="fas fa-inbox"></i> Bandeja de Entrada
                                     <span class="badge bg-primary float-right">12</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
-                                    <i class="far fa-envelope"></i> Sent
+                                    <i class="far fa-envelope"></i> Enviados
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
-                                    <i class="far fa-file-alt"></i> Drafts
+                                    <i class="far fa-file-alt"></i> Borradores
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
-                                    <i class="fas fa-filter"></i> Junk
+                                    <i class="fas fa-filter"></i> Elementos eliminados
                                     <span class="badge bg-warning float-right">65</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
-                                    <i class="far fa-trash-alt"></i> Trash
+                                    <i class="far fa-trash-alt"></i> Basura
                                 </a>
                             </li>
                         </ul>
@@ -152,9 +153,9 @@
                                         </td>
                                         <td class="mailbox-star"><a href="#"><i
                                                     class="fas fa-star text-warning"></i></a></td>
-                                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a>
+                                        <td class="mailbox-name"><a href="read-mail.html">Dayana Guardiola </a>
                                         </td>
-                                        <td class="mailbox-subject"><b>AdminLTE 3.0 Issue</b> - Trying to find a
+                                        <td class="mailbox-subject"><b>Bases de datos</b> - Trying to find a
                                             solution to this problem...
                                         </td>
                                         <td class="mailbox-attachment"></td>
@@ -169,9 +170,9 @@
                                         </td>
                                         <td class="mailbox-star"><a href="#"><i
                                                     class="fas fa-star-o text-warning"></i></a></td>
-                                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a>
+                                        <td class="mailbox-name"><a href="read-mail.html">Leonardo Paez Moreno</a>
                                         </td>
-                                        <td class="mailbox-subject"><b>AdminLTE 3.0 Issue</b> - Trying to find a
+                                        <td class="mailbox-subject"><b>Proyecto</b> - Trying to find a
                                             solution to this problem...
                                         </td>
                                         <td class="mailbox-attachment"><i class="fas fa-paperclip"></i></td>
@@ -186,9 +187,9 @@
                                         </td>
                                         <td class="mailbox-star"><a href="#"><i
                                                     class="fas fa-star-o text-warning"></i></a></td>
-                                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a>
+                                        <td class="mailbox-name"><a href="read-mail.html">Luis Diaz Montenegro</a>
                                         </td>
-                                        <td class="mailbox-subject"><b>AdminLTE 3.0 Issue</b> - Trying to find a
+                                        <td class="mailbox-subject"><b>Reunion</b> - Trying to find a
                                             solution to this problem...
                                         </td>
                                         <td class="mailbox-attachment"><i class="fas fa-paperclip"></i></td>
@@ -243,18 +244,26 @@
             </div>
             <!-- /.col -->
         </div>
+
         <!-- /.row -->
     </section>
+    <div class="col-md-8">
+        <center>
+
+            <a href="/"><button class="btn btn-danger">Salir</button></a>
+        </center>
+    </div>
     <!-- /.content -->
     </div>
-    <!-- /.content-wrapper -->
-    <footer class="main-footer">
-        <div class="float-right d-none d-sm-block">
-            <b>Version</b> 3.2.0
-        </div>
-        <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights
-        reserved.
-    </footer>
+    <!--  
+            <footer class="main-footer">
+                <div class="float-right d-none d-sm-block">
+                    <b>Version</b> 3.2.0
+                </div>
+                <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights
+                reserved.
+            </footer>
+            -->
 
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
@@ -295,8 +304,8 @@
     <script src="https://adminlte.io/themes/v3/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
     <!-- AdminLTE App -->
     <script src="https://adminlte.io/themes/v3/dist/js/adminlte.js"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="https://adminlte.io/themes/v3/dist/js/demo.js"></script>
+    <!-- AdminLTE for demo purposes 
+    <script src="https://adminlte.io/themes/v3/dist/js/demo.js"></script>-->
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="https://adminlte.io/themes/v3/dist/js/pages/dashboard.js"></script>
     <!-- Page specific script -->

@@ -31,8 +31,8 @@
 
         .card {
 
-            width: 350px;
-            height: 500px;
+            width: 400px;
+            height: 520px;
             border-radius: 20px;
 
         }
@@ -47,7 +47,7 @@
 
         body {
 
-            background-color: #7ad1e0;
+            background-color: #aeaeb7;
         }
 
         /* Borde de los Inputs*/
@@ -176,13 +176,20 @@
                         <!-- LLAMAMOS LA RUTA Y ENVIAMOS LA INFO DE USER Y PASS CON EL METODO POST osea oculto -->
                         <form action="verificarUsuario" method="POST">
 
-                            <input autofocus type="email" required name="txtusuario" id='txtusuario'
-                                class="form-control" placeholder="Email">
+                            <input autofocus type="email" required name="txtcorreo" id='txtcorreo' class="form-control"
+                                placeholder="Email">
 
                             <input type="password" required name="txtpass" id="txtpass" class="form-control"
                                 placeholder="Password">
 
                             <button type="submit" class="btn btn-dark btn-block">Iniciar Sesion</button>
+                            <br>
+                            <div
+                                style="border: 1px solid rgb(13, 101, 231); height: 50px; padding: 5px; border-radius: 50px 20px">
+
+                                <p style="color:red; font-size:12px; padding: 2px; margin-left: 5px">{{data}}</p>
+
+                            </div>
                         </form>
                     </div>
 
@@ -203,6 +210,7 @@
                                 class="form-control" placeholder="Password">
 
                             <button type="submit" class="btn btn-dark btn-block">Registrarse</button>
+
                         </form>
 
                     </div>
@@ -223,7 +231,6 @@
 
                             <button type="submit" class="btn btn-dark btn-block">Validar</button>
                         </form>
-
                     </div>
 
 
@@ -236,7 +243,6 @@
 
 
         </div>
-
 
     </div>
 

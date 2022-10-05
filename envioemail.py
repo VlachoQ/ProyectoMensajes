@@ -3,7 +3,7 @@ import smtplib
 from email.message import EmailMessage 
 
 
-def enviar(email_destino,mensaje):
+def enviar(email_destino,asunto,mensaje):
 
     email_origen="plataforma_mensajes_equipo08@outlook.com"
     jls_extract_var = "mensajes123"
@@ -14,7 +14,7 @@ def enviar(email_destino,mensaje):
 
     email["To"] = email_destino
 
-    email["Subject"] = "Codigo de Activacion"
+    email["Subject"] = asunto
 
     email.set_content(mensaje)
 
