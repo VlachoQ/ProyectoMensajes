@@ -28,14 +28,18 @@ def listaUsuarios():
 ###############################################################################
 
 def registroUsuario(nombre,correo,password,codigo):
-    db=sqlite3.connect("mensajes.s3db")
-    db.row_factory=sqlite3.Row
-    cursor=db.cursor()
-    consulta="insert into usuarios(nombreusuario,correo,password,estado,codigovalidacion) values('"+nombre+"','"+correo+"','"+password+"','0','"+codigo+"')"
-    cursor.execute(consulta)
-    #resultado=cursor.fetchall() # DEVUELVE UNA LISTA
-    db.commit()
-    return "1"
+    try:
+        db=sqlite3.connect("mensajes.s3db")
+        db.row_factory=sqlite3.Row
+        cursor=db.cursor()
+        consulta="insert into usuarios(nombreusuario,correo,password,estado,codigovalidacion) values('"+nombre+"','"+correo+"','"+password+"','0','"+codigo+"')"
+        cursor.execute(consulta)
+        #resultado=cursor.fetchall() # DEVUELVE UNA LISTA
+        db.commit()
+        return "Usuario Registrado Satisfactoriamente. Se le ha enviado un mensaje con el Cod. de Activación"
+    except:   
+        return "ERROR!!! No es posible registrar el usuario debido a que el CORREO y/o NOMBRE DE USUARIO existen. Lo invitamos a modificar los valores de estos campos."
+    
 
 ###############################################################################
 

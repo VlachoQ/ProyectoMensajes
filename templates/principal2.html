@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>RestoBar</title>
+    <title>Mensajes</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -31,12 +31,22 @@
         </div>
 
 
-        <div class="">
+
+        <div class="col-10">
+            <br>
+            <center><img
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_K7HDHYdJGHiTo0JXMzqmmPDS4UkJmyiFSQ&usqp=CAU"
+                    width="100px"></center>
+            <br>
 
             <section class="content">
                 <div class="container-fluid">
-                    <div class="contariner alert alert-info">
-                        <h2>Center MAIL - {{infousu[0].nombreusuario}}</h2>
+                    <!--<div class="contariner alert alert-info"> -->
+                    <div style="color:#4369a1">
+                        <center>
+                            <h3>Plataforma MAIL Equipo8</h3>
+                            <h6>Usuario: {{infousu[0].nombreusuario}}</h6>
+                        </center>
                     </div>
 
 
@@ -46,7 +56,8 @@
                             <div class="card">
                                 <div class="card-header d-flex p-0">
                                     <a href="/"><button class="btn btn-danger">Regresar</button></a>
-                                    <h3 class="card-title p-3">Plataforma MAIL Equipo8</h3>
+
+
                                     <ul class="nav nav-pills ml-auto p-2">
                                         <li class="nav-item"><a class="nav-link active" href="#tab_1"
                                                 data-toggle="tab">Gestion de Envio</a></li>
@@ -79,13 +90,10 @@
                                                                         <!-- <a href="/"><button style=" margin-left: 500px" class="btn btn-danger">Regresar</button></a> -->
                                                                     </div>
                                                                     <!-- /.card-header -->
+
                                                                     <div class="card-body">
-                                                                        <!--<div class="form-group">
-                                                                            <input class="form-control" placeholder="Para:">
-                                                                        </div>-->
-                                                                        <h5
-                                                                            style="color:#aeaeb7 ; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">
-                                                                            Para:</h5>
+
+
                                                                         <select
                                                                             style="height: 35px; border-radius: 5px; border-color: #d3d3d6"
                                                                             class="col-md-12" required
@@ -142,7 +150,8 @@
                                             <!-- Aqui dividimos la pantalla para enviados y recibidos -->
                                             <div class="row">
                                                 <div class="col-6" id="d_enviados" name="d_enviados">enviados</div>
-                                                <div class="col-6" id="d_recibidos" name="d_recibidos">recibidos</div>
+                                                <div class="col-6" id="d_recibidos" name="d_recibidos">recibidos
+                                                </div>
                                             </div>
 
                                         </div>
@@ -178,6 +187,7 @@
             </section>
             <!-- /.content -->
         </div>
+
 
 
         <!-- Control Sidebar -->

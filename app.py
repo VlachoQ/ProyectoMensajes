@@ -8,26 +8,21 @@ import envioemail
 
 app = Flask(__name__)
 
-origen=""
+origen=""  # Variable GLOBAL utilizada para guardar el correo original
 
+##################### RUTA RAIZ #################################################################
 @app.route("/")
 def hello_world():
     return render_template("login2.html")
-
-##################### RUTA BANDEJA DE ENTRADA ( PRINCIPAL )#################################################################
-
-@app.route("/bandejaEntrada")
-def bandejaEntrada():
-    return render_template("inbox.html")
-    
-
 ##################### VERIFICA SI EL USUARIO EXISTE EN LA BASE DE DATOS#################################################################
 
 @app.route("/verificarUsuario",methods=['GET', 'POST'])
 def verificarUsuario():
     if request.method=='POST':
         correo = request.form["txtcorreo"]
+        correo=correo.replace("SELECT","").replace("INSERT","").replace("DELETE","").replace("UPDATE","").replace("WHERE","")
         pw = request.form["txtpass"]
+        pw=pw.replace("SELECT","").replace("INSERT","").replace("DELETE","").replace("UPDATE","").replace("WHERE","")
         
         pw2=pw.encode()
         pw2=hashlib.sha384(pw2).hexdigest() # Metodo de encriptacion "sha384" el cual genera 96 caracteres - para tener en cuenta al momento de crear el campo en la tabla que tenga esa longitud o mas. 
@@ -58,8 +53,11 @@ def verificarUsuario():
 def RegistrarUsuario():
     if request.method=='POST':
         nombre = request.form["txtnombre"]
+        nombre=nombre.replace("SELECT","").replace("INSERT","").replace("DELETE","").replace("UPDATE","").replace("WHERE","")
         email = request.form["txtusuarioregistro"]
+        email=email.replace("SELECT","").replace("INSERT","").replace("DELETE","").replace("UPDATE","").replace("WHERE","")
         pw = request.form["txtpassregistro"]
+        pw=pw.replace("SELECT","").replace("INSERT","").replace("DELETE","").replace("UPDATE","").replace("WHERE","")
         
         pw2=pw.encode()
         pw2=hashlib.sha384(pw2).hexdigest() # Metodo de encriptacion "sha384" el cual genera 96 caracteres - para tener en cuenta al momento de crear el campo en la tabla que tenga esa longitud o mas. 
@@ -81,11 +79,11 @@ def RegistrarUsuario():
         envioemail.enviar(email,asuntoCodVerificacion,mensaje)
         
                         # GUARDO EL REGISTRO EN LA BASE DE DATOS
-        controlador.registroUsuario(nombre,email,pw2,codigo2)
+        respuesta=controlador.registroUsuario(nombre,email,pw2,codigo2)
       
-        mensajes="Usuario Registrado Satisfactoriamente. Se le ha enviado un mensaje con el Cod. de Activación"
+        #mensajes="Usuario Registrado Satisfactoriamente. Se le ha enviado un mensaje con el Cod. de Activación"
         #return render_template("informacion.html", data=mensajes) 
-        return render_template("login2.html", data=mensajes)  
+        return render_template("login2.html", data=respuesta)  
         
         # ANTES DE REGISTRAR FALTA VALIDAR CUANDO EL USUARIO EXISTE, PASA QUE SI YA EXISTE LO INTENTA CREAR Y SE BLOQUEA LA BD
 
@@ -95,7 +93,7 @@ def RegistrarUsuario():
 def ValidarActivarUsuario():
     if request.method=='POST':
         codigoAct = request.form["txtcodigo"]
-
+        codigoAct =codigoAct.replace("SELECT","").replace("INSERT","").replace("DELETE","").replace("UPDATE","").replace("WHERE","")
         respuesta= controlador.ValidarActivarUser(codigoAct)
         
         if len(respuesta)==0:
@@ -113,8 +111,11 @@ def enviarMail():
     if request.method=='POST':
         
         emaildestino = request.form["emaildestino"]
+        emaildestino = emaildestino.replace("SELECT","").replace("INSERT","").replace("DELETE","").replace("UPDATE","").replace("WHERE","")
         asunto = request.form["asunto"]
+        asunto = asunto.replace("SELECT","").replace("INSERT","").replace("DELETE","").replace("UPDATE","").replace("WHERE","")
         mensaje = request.form["mensaje"]
+        mensaje = mensaje.replace("SELECT","").replace("INSERT","").replace("DELETE","").replace("UPDATE","").replace("WHERE","")
         #print("enviarEmailAOtroEmail")
         #print(emaildestino)
         #print(asunto)
@@ -156,8 +157,8 @@ def historialRecibidos():
 def actualizarPass():
     if request.method=='POST':
         
-        password=request.form["pass"] # La variable pass es la se utilizó en el AJAX
-
+        password=request.form["pass"] # Recibimos la variable pass es la se utilizó en la funcion AJAX
+        password=password.replace("SELECT","").replace("INSERT","").replace("DELETE","").replace("UPDATE","").replace("WHERE","")
         pw2=password.encode()
         pw2=hashlib.sha384(pw2).hexdigest()
 
