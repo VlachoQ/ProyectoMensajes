@@ -47,7 +47,7 @@ def enviados(correo):
     db=sqlite3.connect("mensajes.s3db")
     db.row_factory=sqlite3.Row
     cursor=db.cursor()
-    consulta="select m.asunto, m.mensaje, m.fecha, m.hora, u.nombreusuario from mensajeria m, usuarios u where u.correo = m.id_usu_recibe and m.id_usu_envia='"+correo+"'"
+    consulta="select m.asunto, m.mensaje, m.fecha, m.hora, u.nombreusuario from mensajeria m, usuarios u where u.correo = m.id_usu_recibe and m.id_usu_envia='"+correo+"'order by fecha desc, hora desc"
     cursor.execute(consulta)
     resultado=cursor.fetchall() 
     return resultado
@@ -58,10 +58,10 @@ def recibidos(correo):
     db=sqlite3.connect("mensajes.s3db")
     db.row_factory=sqlite3.Row
     cursor=db.cursor()
-    consulta=" select m.asunto, m.mensaje, m.fecha, m.hora, u.nombreusuario from mensajeria m, usuarios u where u.correo = m.id_usu_envia and m.id_usu_recibe='"+correo+"' "
+    consulta="select m.asunto, m.mensaje, m.fecha, m.hora, u.nombreusuario from mensajeria m, usuarios u where u.correo = m.id_usu_envia and m.id_usu_recibe='"+correo+"' order by fecha desc, hora desc"
+    cursor.execute(consulta)
     resultado=cursor.fetchall()
-    db.commit()
-    return "1"
+    return resultado
 ###############################################################################
 
 def guardarMensaje(email_destino,asunto,mensaje,email_origen):
