@@ -6,6 +6,7 @@ from datetime import datetime
 import envioemail
 
 
+
 app = Flask(__name__)
 
 origen=""  # Variable GLOBAL utilizada para guardar el correo original
@@ -28,9 +29,9 @@ def verificarUsuario():
         pw2=hashlib.sha384(pw2).hexdigest() # Metodo de encriptacion "sha384" el cual genera 96 caracteres - para tener en cuenta al momento de crear el campo en la tabla que tenga esa longitud o mas. 
        
         cuenta=len(pw2) 
-        print("usuario=" + correo + " | password= " + pw)
-        print("# de caracteres: ",cuenta) #solo para prueba
-        print("Password Encriptado: ",pw2) #solo para prueba  
+        #print("usuario=" + correo + " | password= " + pw)
+        #print("# de caracteres: ",cuenta) #solo para prueba
+        #print("Password Encriptado: ",pw2) #solo para prueba  
        
         respuesta=controlador.buscarUsuario(correo,pw2)
 
@@ -39,6 +40,7 @@ def verificarUsuario():
         if len(respuesta)==0:
             origen=""
             mensajes="Usuario No existe . . .   Verifique los datos ingresados ó vaya a la pestaña 'Registro'"
+                       
             #return render_template("informacion.html", data=mensajes)
             return render_template("login2.html", data=mensajes)  
         else:
@@ -61,31 +63,36 @@ def RegistrarUsuario():
         
         pw2=pw.encode()
         pw2=hashlib.sha384(pw2).hexdigest() # Metodo de encriptacion "sha384" el cual genera 96 caracteres - para tener en cuenta al momento de crear el campo en la tabla que tenga esa longitud o mas. 
-       
-        #cuenta=len(pw2) 
-        print("usuario=" + nombre + " | email= " + email+ "| password= " + pw)
-        #print("# de caracteres: ",cuenta) #solo para prueba
-        #print("Password Encriptado: ",pw2) #solo para prueba  
+               
         codigo=datetime.now() # aqui guardamos la fecha-hora y milisegundos
         codigo2=str(codigo)# lo convertimos a una cadena de caracteres
         codigo2=codigo2.replace("-","")# quitamos los (- : . " ") guiones, dos puntos, los puntos y los espacios de esa cadena
         codigo2=codigo2.replace(":","")
         codigo2=codigo2.replace(" ","")
         codigo2=codigo2.replace(".","")
-                        # ENVIO MAIL  AL CORREO REGISTRADO
-        mensaje="Sr. " +nombre+ ",  su codigo de activacion es :\n\n" +codigo2+ "\n\n Recuerde copiarlo y pegarlo para validarlo en la seccion de login y activar su cuenta.\n\nMuchas Gracias"
-        asuntoCodVerificacion="Codigo de Activación"
 
-        envioemail.enviar(email,asuntoCodVerificacion,mensaje)
         
                         # GUARDO EL REGISTRO EN LA BASE DE DATOS
         respuesta=controlador.registroUsuario(nombre,email,pw2,codigo2)
+                        # ESTE MENSAJE VA EN EL CUERPO DEL CORREO ENVIADO AL BUZON DEL EMAIL REISTRADO POR EL USUARIO
+        mensaje="Sr. " +nombre+ ",  su codigo de activacion es :\n\n" +codigo2+ "\n\n Recuerde copiarlo y pegarlo para validarlo en la pestaña 'Validación Codigo' y activar su cuenta.\n\nMuchas Gracias"
+        asuntoCodVerificacion="Codigo de Activación"
+
+        respCorreo = envioemail.enviar(email,asuntoCodVerificacion,mensaje)
+        #print("respCorreo desde envioemail.enviar: ", respCorreo)
+        
+        if respCorreo=="1":
+            respuesta="El Usuario se Registro Correctamente, se le ha enviado un mensaje con el Cod. de Activación."
+        else:
+            #respuesta="El Usuario se Resgistro Correctamente!!, anuque no fue posible enviar el Email de Activacion, el servicio no se encuentra Disponible o el correo ingresado no es valido, por tanto enviamos el codigo de Activacion ( " +codigo2+ " )por este medio, vaya a la pestaña 'Validación Codigo' para activar su cuenta."   
+            respuesta="El Usuario se Resgistro Correctamente!!, anuque no fue posible enviar el Email de Activacion, el servicio no se encuentra Disponible o ingresó un correo no valido, enviamos el codigo de Activacion por este medio. ("+codigo2+")" 
+                     
       
         #mensajes="Usuario Registrado Satisfactoriamente. Se le ha enviado un mensaje con el Cod. de Activación"
-        #return render_template("informacion.html", data=mensajes) 
+        
         return render_template("login2.html", data=respuesta)  
         
-        # ANTES DE REGISTRAR FALTA VALIDAR CUANDO EL USUARIO EXISTE, PASA QUE SI YA EXISTE LO INTENTA CREAR Y SE BLOQUEA LA BD
+       
 
 #####################################################################################################
 
@@ -95,13 +102,11 @@ def ValidarActivarUsuario():
         codigoAct = request.form["txtcodigo"]
         codigoAct =codigoAct.replace("SELECT","").replace("INSERT","").replace("DELETE","").replace("UPDATE","").replace("WHERE","")
         respuesta= controlador.ValidarActivarUser(codigoAct)
-        
         if len(respuesta)==0:
             mensajes="El Codigo de Activación no es Valido, verifiquelo."
         else:
-            mensajes="El Usuario se ha Activado Satisfactoriamente."    
-
-        #return render_template("informacion.html", data=mensajes)  
+            mensajes="El Usuario se ha Activado Satisfactoriamente. Puede ingresar a la Plataforma."    
+        
         return render_template("login2.html", data=mensajes)       
 
 
@@ -126,7 +131,7 @@ def enviarMail():
         mensajeNotificacion= "Sr. Usuario, usted ha recibido un mensaje nuevo, favor ingrese a la plataforma para ver su Email haciendo Click en la pestaña Historial de Correos. \n\n  Gracias."
         
         envioemail.enviar(emaildestino, asuntoNotificacion, mensajeNotificacion) # Este mensaje se envia como Notifcación para que el usuario ingrese a la Plataforma y desde allí vea su mensaje.
-
+        
         return "Email Enviado Satisfactoriamente"
 
 #################  HISTORIAL ENVIADOS ####################################################################################
@@ -136,7 +141,7 @@ def historialEnviados():
         
         respuesta=controlador.enviados(origen)
         #print(respuesta)
-        return render_template("historial.html", correo=respuesta)
+        return render_template("historialEnv.html", correo=respuesta)
 
 
 
@@ -147,7 +152,8 @@ def historialRecibidos():
         
         respuesta=controlador.recibidos(origen)
         #print(respuesta)
-        return render_template("historial.html", correo=respuesta)
+        return render_template("historialRec.html", correo=respuesta)
+
 
 
 ################################### ACRUALIZAR PASSWORD  #############################################################
@@ -165,4 +171,6 @@ def actualizarPass():
         controlador.actualizarPassw(origen, pw2)
        
         return "Contraseña Actualizada Correctamente"
+        
+        
 ################################################################################################        

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -19,6 +19,20 @@
     <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
     <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/daterangepicker/daterangepicker.css">
     <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/summernote/summernote-bs4.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="sweetalert2.min.css">
+    <style>
+        /* padding: 25px 50px 75px 100px;
+                    top padding is 25px
+                    right padding is 50px
+                    bottom padding is 75px
+                    left padding is 100px */
+        .btnback {
+            padding: 8px 5px 8px 10px;
+
+        }
+    </style>
+
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -32,7 +46,7 @@
 
 
 
-        <div class="col-10">
+        <div class="col-12">
             <br>
             <center><img
                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_K7HDHYdJGHiTo0JXMzqmmPDS4UkJmyiFSQ&usqp=CAU"
@@ -42,10 +56,10 @@
             <section class="content">
                 <div class="container-fluid">
                     <!--<div class="contariner alert alert-info"> -->
-                    <div style="color:#4369a1">
+                    <div id="logoEncabezado" style="color:#4369a1">
                         <center>
                             <h3>Plataforma MAIL Equipo8</h3>
-                            <h6>Usuario: {{infousu[0].nombreusuario}}</h6>
+                            <h6>Usuario: <b>{{infousu[0].nombreusuario}}</b></h6>
                         </center>
                     </div>
 
@@ -55,14 +69,19 @@
                             <!-- Custom Tabs -->
                             <div class="card">
                                 <div class="card-header d-flex p-0">
-                                    <a href="/"><button class="btn btn-danger">Regresar</button></a>
+                                    <a class="btnback" href="/"><button class="btn btn-danger">Regresar</button></a>
 
 
                                     <ul class="nav nav-pills ml-auto p-2">
                                         <li class="nav-item"><a class="nav-link active" href="#tab_1"
                                                 data-toggle="tab">Gestion de Envio</a></li>
+
                                         <li class="nav-item" onclick="cargaHistorial()"><a class="nav-link"
                                                 href="#tab_2" data-toggle="tab">Historial de Correos</a></li>
+
+                                        <!-- <li class="nav-item" onclick="buscarCorreos()"><a class="nav-link" href="#tab_3"
+                                                data-toggle="tab">Buscar Correos</a></li> -->
+
                                         <li class="nav-item"><a class="nav-link" href="#tab_3"
                                                 data-toggle="tab">Perfil</a></li>
 
@@ -86,7 +105,8 @@
 
 
                                                                     <div class="card-header">
-                                                                        <h2 class="card-title">Redactar Mensaje</h2>
+                                                                        <h2 class="card-title"><b>Redactar Mensaje</b>
+                                                                        </h2>
                                                                         <!-- <a href="/"><button style=" margin-left: 500px" class="btn btn-danger">Regresar</button></a> -->
                                                                     </div>
                                                                     <!-- /.card-header -->
@@ -130,8 +150,11 @@
                                                                         </div>
                                                                         <center>
                                                                             <button type="submit"
-                                                                                class="btn btn-primary" type="submit"><i
+                                                                                class="btn btn-primary"><i
                                                                                     class="far fa-envelope"></i>Enviar</button>
+                                                                            <button type="reset"
+                                                                                class="btn btn-danger">Cancelar</button>
+
                                                                         </center>
 
                                                                     </div>
@@ -155,7 +178,20 @@
                                             </div>
 
                                         </div>
-                                        <!-- /.tab-pane -->
+
+
+                                        <!-----------------BUSCAR CORREOS-------------------------------
+                                        <div class="tab-pane" id="tab_3">
+                                            <div class="row">
+                                                <div class="col-6" id="d_Benviados" name="d_Benviados">buscar enviados
+                                                </div>
+                                                <div class="col-6" id="d_Brecibidos" name="d_Brecibidos">buscar
+                                                    recibidos
+                                                </div>
+                                            </div>
+                                        </div>
+                                        -->
+
 
                                         <div class="tab-pane" id="tab_3">
                                             <form onsubmit="return actualizarpassword()">
@@ -166,7 +202,10 @@
                                                     id="txtpass2" name="txtpass2" required type="password">
                                                 <hr>
                                                 <center><button type="submit"
-                                                        class="btn btn-primary">Actualizar</button></center>
+                                                        class="btn btn-primary">Actualizar</button>
+                                                    <button type="reset" class="btn btn-danger">Cancelar</button>
+                                                </center>
+
                                             </form>
                                         </div>
 
@@ -219,7 +258,9 @@
     <script src="https://adminlte.io/themes/v3/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
     <script src="https://adminlte.io/themes/v3/dist/js/adminlte.js"></script>
     <script src="https://adminlte.io/themes/v3/dist/js/pages/dashboard.js"></script>
-
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(function () {
             //Add text editor
@@ -237,7 +278,12 @@
                 data: "emaildestino=" + $("#selectEmailDestino").val() + "&asunto=" + $("#txtasunto").val() + "&mensaje=" + $("#txtMensaje").val(),
                 type: 'POST',
                 success: function (r) {
-                    alert(r);
+                    mostrarAlerta("Exito", r, "success");
+                    /*alert(r);*/
+                    $("#selectEmailDestino").val(" ");
+                    $("#txtasunto").val(" ");
+                    $("#txtMensaje").val(" ");
+
                 },
                 error: function (xhr, status) {
                     alert('Error intente en otro momento');
@@ -258,6 +304,37 @@
                 success: function (r) {
                     r = "<center><h3>Correos Enviados</h3></center>" + r
                     $("#d_enviados").html(r);
+                    $("#t_historialEnv").DataTable();
+                },
+                error: function (xhr, status) {
+                    alert('Error intente en otro momento');
+                }
+            });
+
+            $.ajax({
+                url: 'historialRecibidos', /*ruta de python    compose-textarea */
+                data: "",
+                type: 'POST',
+                success: function (r) {
+                    r = "<center><h3>Correos Recibidos</h3></center>" + r
+                    $("#d_recibidos").html(r);
+                    $("#t_historialRec").DataTable();
+                },
+                error: function (xhr, status) {
+                    alert('Error intente en otro momento');
+                }
+            });
+
+        }
+
+        function buscarCorreos() {
+            $.ajax({
+                url: 'buscarhistorialEnviados', /*ruta de python    compose-textarea */
+                data: "",
+                type: 'POST',
+                success: function (r) {
+                    r = "<center><h3>Buscar Correos Enviados</h3></center>" + r
+                    $("#d_Benviados").html(r);
                 },
                 error: function (xhr, status) {
                     alert('Error intente en otro momento');
@@ -267,17 +344,21 @@
 
 
             $.ajax({
-                url: 'historialRecibidos', /*ruta de python    compose-textarea */
+
+                url: 'buscarhistorialRecibidos', /*ruta de python    compose-textarea */
                 data: "",
                 type: 'POST',
                 success: function (r) {
-                    r = "<center><h3>Correos Recibidos</h3></center>" + r
-                    $("#d_recibidos").html(r);
+                    r = "<center><h3>Buscar Correos Recibidos</h3></center>" + r
+                    $("#d_Brecibidos").html(r);
+
                 },
                 error: function (xhr, status) {
                     alert('Error intente en otro momento');
                 }
             });
+
+
 
         }
 
@@ -289,7 +370,11 @@
                     data: "pass=" + $("#txtpass1").val(),
                     type: 'POST',
                     success: function (r) {
-                        alert(r);
+                        /*alert(r);*/
+                        mostrarAlerta("Exito", r, "success");
+                        $("#txtpass1").val(" ");
+                        $("#txtpass2").val(" ");
+
                     },
                     error: function (xhr, status) {
                         alert('Error intente en otro momento');
@@ -298,11 +383,22 @@
 
             }
             else {
-                alert("Las Contraseñas No Son Iguales.")
+                /*alert("Las Contraseñas No Son Iguales.")*/
+
+                mostrarAlerta("Error", "Las Contraseñas No Son Iguales.", "error");
             }
             return false;
         }
 
+
+        function mostrarAlerta(titulo, mensaje, tipoAlerta) {
+            swal.fire(
+                titulo,
+                mensaje,
+                tipoAlerta
+            );
+
+        }
     </script>
 
 

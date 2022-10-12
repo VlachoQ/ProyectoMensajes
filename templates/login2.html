@@ -7,6 +7,9 @@
     <title>Snippet - BBBootstrap</title>
     <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css' rel='stylesheet'>
     <link href='#' rel='stylesheet'>
+
+    <link rel="stylesheet" tybe="text/css" href="static/css/estilos.css">
+
     <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
     <style>
         ::-webkit-scrollbar {
@@ -28,12 +31,12 @@
             background: #555;
         }
 
-
         .card {
 
             width: 400px;
             height: 520px;
             border-radius: 20px;
+            border-color: #4369a1;
 
         }
 
@@ -174,6 +177,7 @@
 
                     <div class="form px-4 pt-5">
                         <!-- LLAMAMOS LA RUTA Y ENVIAMOS LA INFO DE USER Y PASS CON EL METODO POST osea oculto -->
+                        <!-- FORMULARIO PESTAÑA INICIO-->
                         <form action="verificarUsuario" method="POST">
 
                             <input autofocus type="email" required name="txtcorreo" id='txtcorreo' class="form-control"
@@ -182,14 +186,19 @@
                             <input type="password" required name="txtpass" id="txtpass" class="form-control"
                                 placeholder="Password">
 
-                            <button type="submit" class="btn btn-dark btn-block">Iniciar Sesion</button>
+                            <button type="submit" class="btn btn-dark btn-block">Iniciar
+                                Sesion</button>
+
                             <br>
-                            <div
-                                style="border: 1px solid rgb(13, 101, 231); height: 65px; padding: 5px; border-radius: 50px 20px">
+                            <div>
+                                <!--style="border: 1px solid rgb(13, 101, 231); height: 65px; padding: 5px; border-radius: 50px 20px">-->
 
                                 <p style="color:red; font-size:12px; padding: 2px; margin-left: 7px">{{data}}</p>
-
+                                <!--<script>
+                                    alert({ data });
+                                </script>-->
                             </div>
+
                         </form>
                     </div>
 
@@ -198,7 +207,7 @@
 
 
                     <div class="form px-4">
-
+                        <!-- FORMULARIO PESTAÑA REGISTRO-->
                         <form action=" RegistrarUsuario" method="POST">
                             <input required type="text" id="txtnombre" name="txtnombre" name="" class="form-control"
                                 placeholder="Nombres">
@@ -224,7 +233,7 @@
 
 
                     <div class="form px-4">
-
+                        <!-- FORMULARIO PESTAÑA VALIDACION CODIGO-->
                         <form action=" ValidarActivarUsuario" method="POST">
                             <input required type="text" id="txtcodigo" name="txtcodigo" name="" class="form-control"
                                 placeholder="Codigo de Verificacion">
@@ -248,6 +257,19 @@
 
     <script type='text/javascript'
         src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js'></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    <script>
+        function mostrarAlerta(titulo, mensaje, tipoAlerta) {
+            swal.fire(
+                titulo,
+                mensaje,
+                tipoAlerta
+            );
+
+        }
+    </script>
 
 
 </body>

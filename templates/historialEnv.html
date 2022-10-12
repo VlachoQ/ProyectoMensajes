@@ -1,0 +1,30 @@
+<style>
+    th {
+        font-size: 14px;
+    }
+
+    td {
+        font-size: 12px;
+    }
+</style>
+
+<table id="t_historialEnv" name="t_historialEnv" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Asunto</th>
+            <th>Mensaje</th>
+            <th>Fecha / Hora</th>
+            <th>Destinatario</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for c in correo%}
+        <tr>
+            <td>{{ c[ 'asunto'] }}</td>
+            <td>{{ c[ 'mensaje'] }}</td>
+            <td>{{ c[ 'fecha'] }} / {{ c[ 'hora'] }}</td>
+            <td>{{ c['nombreusuario' ] }}</td>
+        </tr>
+        {%endfor%}
+    </tbody>
+</table>
